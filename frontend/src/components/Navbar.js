@@ -36,6 +36,16 @@ const navbar = () => {
                         Logout
                     </a>
                 </li>
+                <li className='nav-item text-light'>
+                    <Link href='/movies'>
+                        <a className={
+                            router.pathname === '/movies' ? 
+                            'nav-link active text-light' : 'nav-link text-light'
+                        }>
+                            Movies
+                        </a>
+                    </Link>
+                </li>
             </div>
         </>
     );
