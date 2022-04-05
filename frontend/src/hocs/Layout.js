@@ -27,8 +27,8 @@ const Layout = ({ title, content, children }) => {
 };
 
 Layout.defaultProps = {
-    title: 'httpOnly Auth',
-    content: 'Tutorial for showing you how to use httpOnly cookies for storing json web tokens'
+    title: 'Movies app',
+    content: 'App for showing movies - like imDB!'
 }
 
 export default Layout;
