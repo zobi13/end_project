@@ -9,7 +9,8 @@ class MovieService extends HttpService {
   };
 
   get = async (id) => {
-    const { data } = await this.client.get(`/movies/${id}`);
+    const access = localStorage.getItem('access');
+    const { data } = await this.client.get(`/movies/${id}`, access);
     return data;
   };
 

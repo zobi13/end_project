@@ -26,7 +26,10 @@ function* handleCreateMovie(action) {
 
 function* handleGetMovie(action) {
   try {
-    const movie = yield call(movieService.get(), action.payload);
+    console.log(action.payload);
+    const movie = yield call(movieService.get, action.payload);
+
+    console.log('Dobio movie', movie);
     yield put(setMovie(movie));
   } catch (error) {
     console.log(error);

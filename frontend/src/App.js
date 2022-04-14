@@ -36,14 +36,14 @@ function App() {
         <Navbar />
         <Switch>
           {/* Trebali bi biti private route */}
-          <PrivateRoute exact path='/movies'>
-            <AppMovies />
+          <PrivateRoute path='/movies/create'>
+            <AddMoviePage />
           </PrivateRoute>
-          <PrivateRoute exact path='/movies/create'>
+          <PrivateRoute path='/movies/:id'>
             <SingleMoviePage />
           </PrivateRoute>
-          <PrivateRoute exact path='/movies/:id'>
-            <AddMoviePage />
+          <PrivateRoute exact path='/movies'>
+            <AppMovies />
           </PrivateRoute>
           <PrivateRoute exact path='/dashboard'>
             <Dashboard />
