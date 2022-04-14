@@ -1,114 +1,53 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../actions/auth';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectActiveUser, selectIsAuthenticated } from "../store/auth";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const navbar = () => {
-    const dispatch = useDispatch();
-    const router = useRouter();
+export default function Navbar() {
 
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const history = useHistory()
+    const isAuthenticated = useSelector(selectIsAuthenticated);
+    const dispatch = useDispatch()
 
-    const logoutHandler = () => {
-        if (dispatch && dispatch !== null && dispatch !== undefined)
-            dispatch(logout());
-    };
-
-    const authLinks = (
-        <>
-            <div className='nav'>
-                <li className='nav-item text-light'>
-                    <Link href='/dashboard'>
-                        <a className={
-                            router.pathname === '/dashboard' ? 
-                            'nav-link active text-light' : 'nav-link text-light'
-                        }>
-                            Dashboard
-                        </a>
-                    </Link>
-                </li>
-                <li className='nav-item'>
-                    <a 
-                        className='nav-link text-light'
-                        href='#!'
-                        onClick={logoutHandler}
-                    >
-                        Logout
-                    </a>
-                </li>
-                <li className='nav-item text-light'>
-                    <Link href='/movies'>
-                        <a className={
-                            router.pathname === '/movies' ? 
-                            'nav-link active text-light' : 'nav-link text-light'
-                        }>
-                            Movies
-                        </a>
-                    </Link>
-                </li>
-            </div>
-        </>
-    );
-
-    const guestLinks = (
-        <>
-            <div className='nav'>
-                <li className='nav-item'>
-                    <Link href='/register'>
-                        <a className={
-                            router.pathname === '/register' ? 
-                            'nav-link active text-light' : 'nav-link text-light'
-                        }>
-                            Register
-                        </a>
-                    </Link>
-                </li>
-                <li className='nav-item text-light'>
-                    <Link href='/login'>
-                        <a className={
-                            router.pathname === '/login' ? 
-                            'nav-link active text-light' : 'nav-link text-light'
-                        }>
-                            Login
-                        </a>
-                    </Link>
-                </li>
-            </div>
-        </>
-    );
+    function handleLogout() {
+        dispatch(logout());
+        history.push('/login')
+    }
 
     return (
-        <nav className='navbar navbar-expand-lg navbar-light bg-dark'>
-            <div className='container-fluid p-2'>
-                <Link href='/'>
-                    <a className='navbar-brand text-warning'>
-                        HOME
-                    </a>
-                </Link>
-                <button 
-                    className='navbar-toggler' 
-                    type='button' 
-                    data-bs-toggle='collapse' 
-                    data-bs-target='#navbarNav' 
-                    aria-controls='navbarNav' 
-                    aria-expanded='false' 
-                    aria-label='Toggle navigation'
-                >
-                    <span className='navbar-toggler-icon' ></span>
-                </button>
-                <div className='collapse navbar-collapse' id='navbarNav'>
-                    <ul className='navbar-nav'>
-                        <li className='nav-item'>
+        <nav>
+            <ul>
+                {isAuthenticated ? (
+                    <>
+                        <li>
+                            <Link to="/">Home</Link>
                         </li>
-                        
-                        {
-                            isAuthenticated ? authLinks : guestLinks
-                        }
-                    </ul>
-                </div>
-            </div>
+                        <li>
+                            <Link to="/movies">Movies</Link>
+                        </li>
+                        <li>
+                            <Link to="/dashboard">Dashboard</Link>
+                        </li>
+                        <li>
+                            <Link to="/movies/create">Add a movie</Link>
+                        </li>
+                        <li>
+                            <button type="button" onClick={handleLogout}> Logout </button>
+                        </li>
+                    </>
+                ) : (
+                    <>
+                        <li>
+                            <Link to="/login">Login</Link>
+                        </li>
+                        <li>
+                            <Link to="/register">Register</Link>
+                        </li>
+                    </>
+                )}
+
+            </ul>
         </nav>
     );
-};
-
-export default navbar;
+}
