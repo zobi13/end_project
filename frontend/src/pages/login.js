@@ -17,6 +17,7 @@ export default function Login() {
     history.push('/dashboard')
   }
 
+
   return (
     <div>
       <h2>Login</h2>

@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated, BasePermission, SAFE_MET
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from rest_framework.viewsets import ModelViewSet
 
+
 class MovieUserPermission(BasePermission):
     message = 'Permission denied'
 
@@ -16,18 +17,22 @@ class MovieUserPermission(BasePermission):
 
         return obj.user == request.user
 
+
 class GenreListCreate(generics.ListCreateAPIView):
-    queryset=Genre.objects.all()
-    # serializer_class = serializers.GenreSerializer
+    queryset = Genre.objects.all()
+    serializer_class = serializers.GenreSerializer
+
 
 class GenreDelete(generics.DestroyAPIView):
     queryset = Genre.objects.all()
-    # serializer_class = serializers.GenreSerializer
+    serializer_class = serializers.GenreSerializer
+
 
 class MovieList(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Movie.objects.all()
     serializer_class = serializers.MovieSerializer
+
 
 class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [MovieUserPermission]

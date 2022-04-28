@@ -1,8 +1,11 @@
+from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
 from django.contrib.auth.models import User
 from .serializers import UserSerializer
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 
 
 class RegisterView(APIView):
@@ -34,7 +37,7 @@ class RegisterView(APIView):
 
                         if User.objects.filter(username=username).exists():
                             return Response(
-                                {'success': 'Account created successfully'},
+                                {'success': 'Account created successfully', },
                                 status=status.HTTP_201_CREATED
                             )
                         else:
@@ -63,6 +66,7 @@ class RegisterView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class LoadUserView(APIView):
     def get(self, request, format=None):
         try:
@@ -78,3 +82,18 @@ class LoadUserView(APIView):
                 {'error': 'Something went wrong when trying to load user'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
+class LogoutView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        if self.request.data.get('all'):
+            token: OutstandingToken
+            for token in OutstandingToken.objects.filter(user=request.user):
+                _, _ = BlacklistedToken.objects.get_or_create(token=token)
+            return Response({"status": "OK, goodbye, all refresh tokens blacklisted"})
+        refresh_token = self.request.data.get('refresh_token')
+        token = RefreshToken(token=refresh_token)
+        token.blacklist()
+        return Response({"status": "OK, goodbye"})

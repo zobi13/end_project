@@ -16,38 +16,41 @@ export default function Navbar() {
     }
 
     return (
-        <nav>
-            <ul>
-                {isAuthenticated ? (
-                    <>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/movies">Movies</Link>
-                        </li>
-                        <li>
-                            <Link to="/dashboard">Dashboard</Link>
-                        </li>
-                        <li>
-                            <Link to="/movies/create">Add a movie</Link>
-                        </li>
-                        <li>
-                            <button type="button" onClick={handleLogout}> Logout </button>
-                        </li>
-                    </>
-                ) : (
-                    <>
-                        <li>
-                            <Link to="/login">Login</Link>
-                        </li>
-                        <li>
-                            <Link to="/register">Register</Link>
-                        </li>
-                    </>
-                )}
+        <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+            <div className="collapse navbar-collapse" id="navbarNav">
 
-            </ul>
+                <ul className="navbar-nav">
+                    {isAuthenticated ? (
+                        <>
+                            <li className='navbar-brand active p-2 bg-warning'>
+                                <Link style={{ textDecoration: 'none' }} className='text-dark' to="/">  <b> Home </b> </Link>
+                            </li>
+                            <li className="nav-item p-2">
+                                <Link style={{ textDecoration: 'none' }} to="/movies" className='text-warning'>Movies</Link>
+                            </li>
+                            <li className="nav-item p-2">
+                                <Link style={{ textDecoration: 'none' }} to="/dashboard" className='text-warning'>Dashboard</Link>
+                            </li>
+                            <li className="nav-item p-2">
+                                <Link style={{ textDecoration: 'none' }} to="/movies/create" className='text-warning'>Add a movie</Link>
+                            </li>
+                            <li className="nav-item p-2 align-self-right">
+                                <button type="button" className='text-dark bg-warning' onClick={handleLogout}> Logout </button>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li className="nav-item p-2 ">
+                                <Link className='text-warning' to="/login">Login</Link>
+                            </li>
+                            <li className="nav-item p-2">
+                                <Link className='text-warning' to="/register">Register</Link>
+                            </li>
+                        </>
+                    )}
+
+                </ul>
+            </div>
         </nav>
     );
 }

@@ -19,12 +19,10 @@ const SingleMoviePage = () => {
 
     return (
         <div>
-            Single movie detail page
-
-            <p> {movie?.title} </p>
+            <h2> {movie?.title} </h2>
             <p> {movie?.description} </p>
             <div>
-                <img src={movie?.cover_image} />
+                <img src={movie?.cover_image} alt='Not available' />
             </div>
         </div>
     )

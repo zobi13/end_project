@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { register } from "../store/auth";
 
 export default function Register() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({
     first_name: "",
     last_name: "",
-    profile_pic_url: "",
+    username: "",
     email: "",
     password: "",
     re_password: "",
@@ -16,6 +18,8 @@ export default function Register() {
   function handleSubmit(event) {
     event.preventDefault();
     dispatch(register(userData));
+
+    history.push('/login')
   }
 
   return (
@@ -41,6 +45,14 @@ export default function Register() {
           />
         </div>
         <div>
+          <input
+            required
+            placeholder="Username"
+            value={userData.username}
+            onChange={({ target }) =>
+              setUserData({ ...userData, username: target.value })
+            }
+          />
           <input
             required
             type="email"

@@ -16,29 +16,41 @@ export default function AppMovies() {
 
 
   return (
-    <div style={{ marginLeft: 5 }}>
-      <h2>Movies</h2>
-      {movies &&
-        movies.map((movie) => (
-          <div
-            key={movie.id}
-            style={{
-              border: "3px solid orange",
-              width: 300,
-              marginTop: 15,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <p>
-              <strong>Name:</strong> {movie.title}
-            </p>
-            <p>
-              <strong> Description: </strong> {movie.description}
-            </p>
-            <Link to={`/movies/${movie.id}`}>View movie details</Link>
-          </div>
-        ))}
-    </div>
+    <>
+      <h2 className="mt-3">Movies</h2>
+
+      <div style={{
+        marginLeft: 7,
+        marginRight: 3,
+        padding: 5,
+        display: 'flex',
+        flexWrap: 'wrap',
+      }}>
+        {movies &&
+          movies.map((movie) => (
+            <div
+              key={movie.id}
+              style={{
+                border: "3px solid orange",
+                width: 300,
+                marginTop: 10,
+                marginLeft: 2,
+                marginRight: 2,
+                display: "flex",
+                flexDirection: "column",
+                backgroundColor: "#38271a"
+              }}
+            >
+              <p>
+                <strong className='text-warning'>Name:</strong> <i className='text-warning'> {movie.title} </i>
+              </p>
+              <p>
+                <strong className='text-warning'> Description: </strong> <i className='text-warning'>{movie.description} </i>
+              </p>
+              <Link to={`/movies/${movie.id}`} className='text-warning'> <b> View movie details </b></Link>
+            </div>
+          ))}
+      </div>
+    </>
   );
 }
