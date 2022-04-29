@@ -3,22 +3,23 @@ import HttpService from "./HttpService";
 class AuthService extends HttpService {
   register = async (userData) => {
     const { data } = await this.client.post("/account/register/", userData);
-    console.log(data)
-    // localStorage.setItem("access", data.access);
     return data;
   };
 
   login = async (credentials) => {
     const { data } = await this.client.post("/token/", credentials);
+    console.log(data);
     localStorage.setItem("access", data.access);
     localStorage.setItem("refresh", data.refresh);
     return data;
   };
 
   logout = async () => {
-    await this.client.post("/account/logout/");
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
+    const { data } = await this.client.post("/account/logout/");
+    localStorage.removeItem("access")
+    localStorage.removeItem("refresh")
+    console.log(data);
+    return data;
   };
 
   getActiveUser = async () => {

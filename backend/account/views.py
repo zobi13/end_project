@@ -93,7 +93,7 @@ class LogoutView(APIView):
             for token in OutstandingToken.objects.filter(user=request.user):
                 _, _ = BlacklistedToken.objects.get_or_create(token=token)
             return Response({"status": "OK, goodbye, all refresh tokens blacklisted"})
-        refresh_token = self.request.data.get('refresh_token')
+        refresh_token = self.request.data.get('refresh')
         token = RefreshToken(token=refresh_token)
         token.blacklist()
         return Response({"status": "OK, goodbye"})

@@ -13,7 +13,6 @@ function* registerHandler(action) {
   try {
     const { user } = yield call(authService.register, action.payload);
     yield put(setActiveUser(user));
-    console.log(action);
   } catch (error) {
     console.log(error);
   }

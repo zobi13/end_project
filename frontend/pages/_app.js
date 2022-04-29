@@ -36,8 +36,10 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Navbar />
-      <Component {...pageProps} />
+      <div className='bg-light'>
+        <Navbar />
+        <Component {...pageProps} />
+      </div>
     </Provider>
   )
 }

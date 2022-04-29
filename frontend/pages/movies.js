@@ -16,7 +16,7 @@ const Movies = () => {
 
 
     return (
-        <>
+        <div>
             <h2 className="mt-3">Movies</h2>
 
             <div style={{
@@ -38,7 +38,9 @@ const Movies = () => {
                                 marginRight: 2,
                                 display: "flex",
                                 flexDirection: "column",
-                                backgroundColor: "light"
+                                backgroundColor: "light",
+                                paddingLeft: 4,
+                                paddingTop: 4,
                             }}
                         >
                             <p>
@@ -47,13 +49,16 @@ const Movies = () => {
                             <p>
                                 <strong> Description: </strong> <i className='text-warning'>{movie.description} </i>
                             </p>
+                            <div className="m-2">
+                                <img style={{ border: "2px solid gray" }} width={175} height={150} src={movie.cover_image} />
+                            </div>
                             <Link href={`/movies/${movie.id}`}>
                                 <a className="text-dark">View movie details</a>
                             </Link>
                         </div>
                     ))}
             </div>
-        </>
+        </div>
     );
 }
 

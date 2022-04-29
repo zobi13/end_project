@@ -11,10 +11,14 @@ const dashboard = () => {
     const dispatch = useDispatch()
 
     return (
-        <>
+        <div className='m-3'>
             <h3> {user ? `Hello, ${user.username}` : ''} </h3>
-            <h4> <Link href='/movies'> Here you can browse your favourite movies! </Link> </h4>
-        </>
+            <h4>
+                <Link href='/movies'>
+                    <a className='text-warning'>Here you can browse your favourite movies!</a>
+                </Link>
+            </h4>
+        </div>
     )
 }
 

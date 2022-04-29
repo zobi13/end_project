@@ -21,24 +21,37 @@ const SingleMoviePage = () => {
 
     const genres = useSelector(selectGenres)
 
+    console.log(movie);
 
-    const genreName = () => {
+
+    const genreName = (g) => {
+        const str = "Genres: "
         for (const genre of genres) {
-            if (genre.id === movie?.genre) {
-                return genre.name;
+            if (genre.id === g) {
+                if (genre.id == 1)
+                    str += genre.name;
+                else {
+                    str = ", " + genre.name
+                }
+                return str;
             }
         }
     }
 
     return (
-        <div>
+        <div className='m-3'>
             <h2> {movie?.title} </h2>
             <p> {movie?.description} </p>
             <div>
-                Genre: {genreName()}
+                <div className='d-flex justify-content-left'>
+                    {/* <strong>Genres{":\t"} </strong> */}
+                    {movie?.genre.map(g => (
+                        <div key={g}>{genreName(g)}</div>
+                    ))}
+                </div>
             </div>
-            <div>
-                <img src={movie?.cover_image} alt='Not available' width={300} height={400} />
+            <div className='mt-3'>
+                <img src={movie?.cover_image} alt='Not available' width={300} height={350} />
             </div>
         </div>
     )

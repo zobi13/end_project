@@ -29,26 +29,29 @@ const AddMovie = () => {
         // dispatch(createMovie(movieData));
         console.log(movieData);
         movieService.add(movieData);
-        alert("Successfully added a movie!")
-
         router.push('/movies')
     }
     return (
-        <div>
-            <h2>Add a movie</h2>
+        <div className='container'>
+            <h2 className='m-2'>Add a movie</h2>
 
             <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                        required
-                        placeholder="Title"
-                        value={movieData.title}
-                        onChange={({ target }) =>
-                            setMovieData({ ...movieData, title: target.value })
-                        }
-                    />
-                    <div>
+                <div className='form-group m-2 row'>
+                    <div className='col-lg-7 m-1'>
+                        <input
+                            className='form-control'
+                            required
+                            placeholder="Title"
+                            value={movieData.title}
+                            onChange={({ target }) =>
+                                setMovieData({ ...movieData, title: target.value })
+                            }
+                        />
+                    </div>
+                    <div className='col-lg-7 m-1'>
                         <textarea
+                            className='form-control'
+                            rows={3}
                             required
                             placeholder="Description"
                             value={movieData.description}
@@ -57,10 +60,11 @@ const AddMovie = () => {
                             }
                         />
                     </div>
-                    <div>
+                    <div className='col-lg-7 m-1'>
                         <input
+                            className='form-control'
                             required
-                            type={"url"}
+                            // type={"url"}
                             placeholder="Image URL"
                             value={movieData.cover_image}
                             onChange={({ target }) =>
@@ -68,20 +72,24 @@ const AddMovie = () => {
                             }
                         />
                     </div>
-                    <div>
-                        Select genre / genres: <br />
-                        <select multiple onChange={({ target }) => {
-                            const value = Array.from(target.selectedOptions, option => option.value)
-                            setMovieData({ ...movieData, genre: value })
-                        }} >
-                            {genres.map(genre => (
-                                <option key={genre.id} value={genre.id} > {genre.name} </option>
-                            ))}
-                        </select>
+                    <div className='col-lg-7 m-3'>
+                        <div>
+                            <div className='col-lg-4'>
+                                <h5> Select genres: </h5>
+                                <select className='custom-select' id="inputGroupSelect01" multiple onChange={({ target }) => {
+                                    const value = Array.from(target.selectedOptions, option => option.value)
+                                    setMovieData({ ...movieData, genre: value })
+                                }} >
+                                    {genres.map(genre => (
+                                        <option key={genre.id} value={genre.id} > {genre.name} </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <button style={{ fontSize: 20, width: 80, height: 50 }} className="btn btn-warning text-dark border-dark mt-3">Add</button>
+                        </div>
                     </div>
                 </div>
 
-                <button>Add</button>
             </form >
         </div >
     )
