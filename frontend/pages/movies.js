@@ -1,12 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { selectMovies } from "../store/movies/selectors";
 import { getMovies } from "../store/movies/slice";
+import { useRouter } from "next/router";
+import movieService from "../services/MovieService";
+import _, { debounce } from "lodash"
 
 const Movies = () => {
     const movies = useSelector(selectMovies);
     const dispatch = useDispatch();
+    const router = useRouter()
+
+    const [searchTerm, setSearchTerm] = useState({
+        value: ""
+    });
 
     // console.log('Selektovao movies', movies);
 
@@ -14,10 +22,45 @@ const Movies = () => {
         dispatch(getMovies());
     }, [dispatch]);
 
+    // const handleChange = ({ target }) => {
+    //     const value = target.value;
+    //     setSearchTerm({ ...searchTerm, value })
+    // }
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault()
+
+    //     const searchedMovies = movieService.search(searchTerm.value).then(res => console.log(res))
+
+    //     router.push('/movies/?title=' + searchTerm.value)
+    // }
+
+    function handleChange(event) {
+        setSearchTerm(event.target.value);
+    }
+
+    const search = (searchTerm) => {
+        if (!searchTerm || searchTerm.length > 0) {
+            dispatch(getMovies(searchTerm));
+            router.push(`/movies?title=${searchTerm}`)
+        }
+    };
+    const debouncedSearch = useCallback(_.debounce(search, 750), []);
+
+    useEffect(() => {
+        debouncedSearch(searchTerm);
+    }, [searchTerm]);
+
+
 
     return (
         <div>
             <h2 className="mt-3">Movies</h2>
+
+            <div className="m-3 d-flex justify-content-center" >
+                <input onSubmit={search} onChange={handleChange} type={"search"} placeholder="Search for a movie..." className="border border-dark" style={{ width: 400, height: 50 }} />
+                <button type="submit" className="border border-dark btn-warning"> Search </button>
+            </div>
 
             <div style={{
                 marginLeft: 7,
@@ -57,6 +100,7 @@ const Movies = () => {
                             </Link>
                         </div>
                     ))}
+                {movies?.length === 0 && <div> No movies have been found </div>}
             </div>
         </div>
     );

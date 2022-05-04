@@ -2,10 +2,15 @@ import HttpService from "./HttpService";
 
 class MovieService extends HttpService {
 
-  getAll = async () => {
+  getAll = async (searchTerm) => {
     const access = localStorage.getItem('access');
-    const { data } = await this.client.get("/movies", access);
-    return data;
+    if (!searchTerm) {
+      const { data } = await this.client.get("/movies", access);
+      return data
+    } else {
+      const { data } = await this.client.get(`/movies?title=${searchTerm}`, access)
+      return data;
+    }
   };
 
   get = async (id) => {
