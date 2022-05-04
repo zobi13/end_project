@@ -30,12 +30,15 @@ class GenreDelete(generics.DestroyAPIView):
 
 
 class MovieList(generics.ListCreateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = serializers.MovieSerializer
 
     def get_queryset(self):
         queryset = Movie.objects.all()
         searchTerm = self.request.query_params.get('title')
+        filterTerm = self.request.query_params.get('genre')
+        if filterTerm is not None:
+            queryset = queryset.filter(genre__exact=filterTerm)
         if searchTerm is not None:
             queryset = queryset.filter(title__contains=searchTerm)
         return queryset

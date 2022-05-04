@@ -39,8 +39,10 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <div className='bg-light'>
         <Navbar />
-        <Sidebar />
-        <Component {...pageProps} />
+        <div className='d-flex justify-content-between'>
+          <Component {...pageProps} />
+          <Sidebar />
+        </div>
       </div>
     </Provider>
   )

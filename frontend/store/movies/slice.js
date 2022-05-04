@@ -4,6 +4,7 @@ const middlewareActions = {
   getMovies() { },
   createMovie() { },
   getMovie() { },
+  filterMovies() { }
 };
 
 const moviesSlice = createSlice({
@@ -25,5 +26,5 @@ const moviesSlice = createSlice({
 
 export default moviesSlice.reducer;
 
-export const { getMovies, setMovies, createMovie, getMovie, setMovie } =
+export const { filterMovies, getMovies, setMovies, createMovie, getMovie, setMovie } =
   moviesSlice.actions;
