@@ -131,7 +131,9 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'movies.pagination.MoviesListPagination',
+    'PAGE_SIZE': 10
 }
 
 SIMPLE_JWT = {
