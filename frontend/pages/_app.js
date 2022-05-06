@@ -9,7 +9,6 @@ import { useRouter } from 'next/router';
 import { getActiveUser, selectActiveUser, setToken } from '../store/auth';
 import { selectGenres } from '../store/genres/selectors';
 import { getGenres } from '../store/genres/slice';
-import Sidebar from '../components/Sidebar';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
@@ -39,10 +38,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <div className='bg-light'>
         <Navbar />
-        <div className='d-flex justify-content-between'>
-          <Component {...pageProps} />
-          <Sidebar />
-        </div>
+        <Component {...pageProps} />
       </div>
     </Provider>
   )

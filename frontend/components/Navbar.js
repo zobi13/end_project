@@ -37,7 +37,7 @@ const Navbar = () => {
                 {isAuthenticated ? (
                     <>
                         <li className="nav-item nav-link p-2">
-                            <Link href="/movies">
+                            <Link href={{ pathname: "/movies", query: { page: 1 } }}>
                                 <a className='text-light'> Movies </a>
                             </Link>
                         </li>
@@ -70,7 +70,7 @@ const Navbar = () => {
                     </>
                 )}
             </ul>
-        </nav>
+        </nav >
     )
 }
 

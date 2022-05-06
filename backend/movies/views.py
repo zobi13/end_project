@@ -41,7 +41,8 @@ class MovieList(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = Movie.objects.all()
         # paginator = Paginator(queryset, 10)
-        # page_number = self.request.query_params.get('page')
+        page_number = self.request.query_params.get('page')
+        print(page_number)
         # page_obj = paginator.get_page(page_number)
         searchTerm = self.request.query_params.get('title')
         filterTerm = self.request.query_params.get('genre')

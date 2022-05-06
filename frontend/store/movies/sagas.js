@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import { filterMovies, getMovies, setMovies, createMovie, getMovie, setMovie } from "./slice";
+import { setCurrentPage, filterMovies, getMovies, setMovies, createMovie, getMovie, setMovie, getPaginatedMovies } from "./slice";
 import movieService from "../../services/MovieService";
 
 function* handleGetMovies(action) {
@@ -12,8 +12,18 @@ function* handleGetMovies(action) {
   }
 }
 
-function* handleFilterMovies(action) {
+function* handleGetPaginatedMovies(action) {
   console.log(action.payload);
+
+  try {
+    const movies = yield call(movieService.paginate, action.payload)
+    yield put(setMovies(movies))
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function* handleFilterMovies(action) {
   try {
     const movies = yield call(movieService.filter, action.payload)
     yield put(setMovies(movies))
@@ -47,6 +57,10 @@ function* handleGetMovie(action) {
 
 export function* watchGetMovies() {
   yield takeLatest(getMovies.type, handleGetMovies);
+}
+
+export function* watchGetPaginatedMovies() {
+  yield takeLatest(getPaginatedMovies.type, handleGetPaginatedMovies);
 }
 
 export function* watchFilterMovies() {
