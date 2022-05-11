@@ -24,7 +24,6 @@ class AuthService extends HttpService {
   getActiveUser = async () => {
     const access = localStorage.getItem('access');
     const { data } = await this.client.get("/account/user/", access);
-    // console.log(data.user);
     return data.user;
   };
 }

@@ -1,18 +1,12 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import movieService from '../../services/MovieService';
-import { selectActiveUser } from '../../store/auth';
 import { selectGenres } from '../../store/genres/selectors';
-import { getGenres } from '../../store/genres/slice';
-import { createMovie } from '../../store/movies/slice';
-import Select from "react-select"
+
 
 const AddMovie = () => {
     const router = useRouter();
-    // console.log(author);
-    const dispatch = useDispatch()
-    // const [selectOptions, setSelectOptions] = useState([]);
     const [movieData, setMovieData] = useState({
         title: "",
         description: "",
@@ -20,14 +14,9 @@ const AddMovie = () => {
         genre: [],
     });
     const genres = useSelector(selectGenres)
-    useEffect(() => {
-        console.log("zanrovi", genres)
-    }, [genres])
 
     function handleSubmit(event) {
         event.preventDefault();
-        // dispatch(createMovie(movieData));
-        console.log(movieData);
         movieService.add(movieData);
         router.push('/movies')
     }
@@ -64,7 +53,6 @@ const AddMovie = () => {
                         <input
                             className='form-control'
                             required
-                            // type={"url"}
                             placeholder="Image URL"
                             value={movieData.cover_image}
                             onChange={({ target }) =>

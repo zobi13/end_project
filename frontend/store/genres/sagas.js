@@ -15,7 +15,6 @@ function* handleGetGenres(action) {
 function* handleGetGenre(action) {
     try {
         const genre = yield call(genreService.get, action.payload);
-
         yield put(setGenre(genre));
     } catch (error) {
         console.log(error);

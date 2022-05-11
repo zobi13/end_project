@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import genreService from '../../services/GenreService';
-import { selectGenre, selectGenres } from '../../store/genres/selectors';
-import { getGenre } from '../../store/genres/slice';
+import { selectGenres } from '../../store/genres/selectors';
 import { selectMovie } from "../../store/movies/selectors";
 import { getMovie } from '../../store/movies/slice';
 

@@ -3,7 +3,6 @@ import { setCurrentPage, searchOrFilterMovies, getMovies, setMovies, createMovie
 import movieService from "../../services/MovieService";
 
 function* handleGetMovies(action) {
-  console.log(action.payload);
   try {
     const movies = yield call(movieService.getAll, action.payload);
     yield put(setMovies(movies));
@@ -13,7 +12,6 @@ function* handleGetMovies(action) {
 }
 
 function* handleSearchOrFilterMovies(action) {
-  console.log(action.payload);
   try {
     const movies = yield call(movieService.searchOrFilter, action.payload)
     yield put(setMovies(movies))
@@ -25,7 +23,6 @@ function* handleSearchOrFilterMovies(action) {
 function* handleCreateMovie(action) {
   try {
     const movie = yield call(movieService.add(), action.payload.movie);
-    console.log('Dobio add');
 
     if (action.payload.onSuccess) {
       yield call(action.payload.onSuccess, movie);

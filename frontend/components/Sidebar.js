@@ -1,27 +1,25 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectGenres } from '../store/genres/selectors'
-import { getMovies, filterMovies } from '../store/movies/slice'
+import { searchOrFilterMovies } from '../store/movies/slice'
 
 const Sidebar = () => {
     const router = useRouter()
     const dispatch = useDispatch()
     const genres = useSelector(selectGenres)
 
-    // const filter = (e, genre) => {
-    //     console.log(genre);
-    //     if (!genre) {
-    //         dispatch(getMovies(genre));
-    //         router.push(`/movies?genre=${genre.id}`)
-    //     }
-    // };
+    const searchValue = {
+        title: "",
+        genre: ""
+    }
+
     const filter = async (e, genre) => {
         e?.preventDefault();
-        console.log(`clicked ${genre}`);
+        searchValue.genre = genre
         if (genre) {
-            dispatch(filterMovies(genre));
+            dispatch(searchOrFilterMovies(searchValue));
             router.push(`/movies?genre=${genre}`)
         }
     };

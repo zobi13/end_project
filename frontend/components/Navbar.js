@@ -9,11 +9,6 @@ const Navbar = () => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const dispatch = useDispatch()
 
-    // if (typeof window !== 'undefined') {
-    //     const access = localStorage.getItem('access')
-    //     console.log(access);
-    //     dispatch(setToken(access))
-    // }
     useEffect(() => {
         const access = localStorage.getItem('access')
         if (access) {
@@ -37,7 +32,7 @@ const Navbar = () => {
                 {isAuthenticated ? (
                     <>
                         <li className="nav-item nav-link p-2">
-                            <Link href='/movies'>
+                            <Link href='/movies?page=1'>
                                 <a className='text-light'> Movies </a>
                             </Link>
                         </li>

@@ -1,5 +1,4 @@
 export function selectMovies(state) {
-  // console.log(state.movies.allMovies);
   return state.movies.allMovies.data;
 }
 

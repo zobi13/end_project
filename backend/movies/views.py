@@ -10,6 +10,7 @@ from rest_framework.viewsets import ModelViewSet
 from django.core.paginator import Paginator
 from rest_framework.pagination import PageNumberPagination
 from .pagination import MoviesListPagination
+from movies import pagination
 
 
 class MovieUserPermission(BasePermission):
@@ -36,6 +37,7 @@ class GenreDelete(generics.DestroyAPIView):
 class SearchFilterMovies(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.MovieSerializer
+    # pagination_class = MoviesListPagination
 
     def get_queryset(self):
         queryset = Movie.objects.all()
@@ -45,8 +47,6 @@ class SearchFilterMovies(generics.ListAPIView):
             queryset = queryset.filter(genre__exact=filterTerm)
         if searchTerm is not None:
             queryset = queryset.filter(title__contains=searchTerm)
-        # if page_number is not None:
-        #     return page_obj
         return queryset
 
 
