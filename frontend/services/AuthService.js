@@ -8,7 +8,6 @@ class AuthService extends HttpService {
 
   login = async (credentials) => {
     const { data } = await this.client.post("/token/", credentials);
-    console.log(data);
     localStorage.setItem("access", data.access);
     localStorage.setItem("refresh", data.refresh);
     return data;

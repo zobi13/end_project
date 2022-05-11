@@ -2,24 +2,28 @@ import HttpService from "./HttpService";
 
 class MovieService extends HttpService {
 
-  getAll = async (searchTerm) => {
+  searchOrFilter = async ({ title, genre }) => {
+    console.log(title);
     const access = localStorage.getItem('access');
-    if (!searchTerm) {
+    if (!title && !genre) {
       const { data } = await this.client.get("/movies", access);
       return data
-    } else {
-      const { data } = await this.client.get(`/movies?title=${searchTerm}`, access)
+    } else if (!genre) {
+      const { data } = await this.client.get(`filterMovies/?title=${title}`, access)
+      return data;
+    } else if (!title) {
+      const { data } = await this.client.get(`/filterMovies/?genre=${genre}`, access)
       return data;
     }
   };
 
-  paginate = async (pageNumber) => {
+  getAll = async (current_page) => {
     const access = localStorage.getItem('access')
-    if (!pageNumber) {
+    if (!current_page) {
       const { data } = await this.client.get("/movies", access)
       return data
     } else {
-      const { data } = await this.client.get(`/movies?page=${pageNumber}`)
+      const { data } = await this.client.get(`/movies?page=${current_page}`)
       return data
     }
   }

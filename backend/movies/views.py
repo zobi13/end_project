@@ -33,17 +33,12 @@ class GenreDelete(generics.DestroyAPIView):
     serializer_class = serializers.GenreSerializer
 
 
-class MovieList(generics.ListCreateAPIView):
+class SearchFilterMovies(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.MovieSerializer
-    pagination_class = MoviesListPagination
 
     def get_queryset(self):
         queryset = Movie.objects.all()
-        # paginator = Paginator(queryset, 10)
-        page_number = self.request.query_params.get('page')
-        print(page_number)
-        # page_obj = paginator.get_page(page_number)
         searchTerm = self.request.query_params.get('title')
         filterTerm = self.request.query_params.get('genre')
         if filterTerm is not None:
@@ -53,6 +48,29 @@ class MovieList(generics.ListCreateAPIView):
         # if page_number is not None:
         #     return page_obj
         return queryset
+
+
+class MovieList(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.MovieSerializer
+    pagination_class = MoviesListPagination
+    queryset = Movie.objects.all()
+
+    # def get_queryset(self):
+    #     queryset = Movie.objects.all()
+    #     # paginator = Paginator(queryset, 10)
+    #     page_number = self.request.query_params.get('page')
+    #     print(page_number)
+    #     # page_obj = paginator.get_page(page_number)
+    #     searchTerm = self.request.query_params.get('title')
+    #     filterTerm = self.request.query_params.get('genre')
+    #     if filterTerm is not None:
+    #         queryset = queryset.filter(genre__exact=filterTerm)
+    #     if searchTerm is not None:
+    #         queryset = queryset.filter(title__contains=searchTerm)
+    #     # if page_number is not None:
+    #     #     return page_obj
+    #     return queryset
 
 
 class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
