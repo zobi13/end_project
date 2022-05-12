@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import { setCurrentPage, searchOrFilterMovies, getMovies, setMovies, createMovie, getMovie, setMovie } from "./slice";
+import { getMovies, setMovies, createMovie, getMovie, setMovie } from "./slice";
 import movieService from "../../services/MovieService";
 
 function* handleGetMovies(action) {
@@ -8,15 +8,6 @@ function* handleGetMovies(action) {
     yield put(setMovies(movies));
   } catch (error) {
     console.error(error);
-  }
-}
-
-function* handleSearchOrFilterMovies(action) {
-  try {
-    const movies = yield call(movieService.searchOrFilter, action.payload)
-    yield put(setMovies(movies))
-  } catch (error) {
-    console.error(error)
   }
 }
 
@@ -44,10 +35,6 @@ function* handleGetMovie(action) {
 
 export function* watchGetMovies() {
   yield takeLatest(getMovies.type, handleGetMovies);
-}
-
-export function* watchFilterMovies() {
-  yield takeLatest(searchOrFilterMovies.type, handleSearchOrFilterMovies);
 }
 
 export function* watchCreateMovie() {

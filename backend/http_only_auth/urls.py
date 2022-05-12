@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-from movies.views import MovieDetail, MovieList, SearchFilterMovies
+from movies.views import MovieDetail, MovieList
 from movies.views import GenreListCreate, GenreDelete
 
 urlpatterns = [
@@ -14,5 +14,4 @@ urlpatterns = [
     path('api/movies/', MovieList.as_view(), name='listcreate'),
     path('api/genres/', GenreListCreate.as_view()),
     path('api/genres/<int:pk>/delete/', GenreDelete.as_view()),
-    path('api/filterMovies/', SearchFilterMovies.as_view()),
 ]

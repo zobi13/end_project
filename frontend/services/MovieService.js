@@ -9,37 +9,21 @@ import HttpService from "./HttpService";
 
 class MovieService extends HttpService {
 
-  searchOrFilter = async ({ title, genre, page }) => {
-    const access = localStorage.getItem('access');
-    if (!title && !genre && !page) {
-      const { data } = await this.client.get("/movies", access);
-      return data
-    } else if (!genre) {
-      const { data } = await this.client.get(`filterMovies/?title=${title}`, access)
-      return data;
-    } else if (!title) {
-      const { data } = await this.client.get(`/filterMovies/?genre=${genre}`, access)
-      return data;
-    }
-  };
-
-  getAll = async (current_page) => {
+  getAll = async ({ page, genre, title }) => {
     const access = localStorage.getItem('access')
-    if (!current_page) {
+    if (!page && !genre && !title) {
       const { data } = await this.client.get("/movies", access)
       return data
-    } else {
-      const { data } = await this.client.get(`/movies?page=${current_page}`)
+    } else if (!genre && !title) {
+      const { data } = await this.client.get(`/movies?page=${page}`)
+      return data
+    } else if (!genre || genre == "") {
+      const { data } = await this.client.get(`/movies/?page=${page}&title=${title}`)
+      return data
+    } else if (!title || title == "") {
+      const { data } = await this.client.get(`/movies/?page=${page}&genre=${genre}`)
       return data
     }
-  }
-
-  filter = async (filterTerm) => {
-    const access = localStorage.getItem('access');
-
-    const { data } = await this.client.get(`/movies?genre=${filterTerm}`, access)
-
-    return data;
   }
 
   get = async (id) => {
