@@ -3,5 +3,13 @@ export function selectMovies(state) {
 }
 
 export function selectMovie(state) {
-  return state.movies.selectedMovie;
+  return state.movies.selectedMovie.data;
+}
+
+export function selectLikeActive(state) {
+  return state.movies.selectedMovie.likeActive
+}
+
+export function selectDislikeActive(state) {
+  return state.movies.selectedMovie.dislikeActive;
 }

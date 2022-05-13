@@ -34,6 +34,7 @@ const Movies = () => {
         handleSearch()
     }, [router.query.page, router.query.title, router.query.genre])
 
+    console.log(movies);
 
     return (
         <div className="d-flex justify-content-between">

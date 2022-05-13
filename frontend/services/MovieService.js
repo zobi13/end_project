@@ -33,13 +33,12 @@ class MovieService extends HttpService {
   };
 
   add = async (newMovie) => {
-    console.log(newMovie);
     const access = localStorage.getItem('access')
     const { data } = await this.client.post("/movies/", newMovie, access);
     return data;
   };
 
-  edit = async (id, movie) => {
+  edit = async ({ id, movie }) => {
     const { data } = await this.client.patch(`/movies/${id}/`, movie);
     return data;
   };

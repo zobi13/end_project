@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import { getMovies, setMovies, createMovie, getMovie, setMovie } from "./slice";
+import { getLikeActive, getDislikeActive, setDislikeActive, setLikeActive, getMovies, setMovies, createMovie, getMovie, setMovie } from "./slice";
 import movieService from "../../services/MovieService";
 
 function* handleGetMovies(action) {
@@ -13,7 +13,7 @@ function* handleGetMovies(action) {
 
 function* handleCreateMovie(action) {
   try {
-    const movie = yield call(movieService.add(), action.payload.movie);
+    const movie = yield call(movieService.add, action.payload.movie);
 
     if (action.payload.onSuccess) {
       yield call(action.payload.onSuccess, movie);
@@ -29,7 +29,25 @@ function* handleGetMovie(action) {
 
     yield put(setMovie(movie));
   } catch (error) {
-    console.log(error);
+    console.error(error);
+  }
+}
+
+function* handleUpdateLike(action) {
+  try {
+    console.log("Like je ", action.payload);
+    yield put(setLikeActive(action.payload))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+function* handleUpdateDislike(action) {
+  try {
+    console.log("Dislike je ", action.payload);
+    yield put(setDislikeActive(action.payload))
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -43,4 +61,12 @@ export function* watchCreateMovie() {
 
 export function* watchGetMovie() {
   yield takeLatest(getMovie.type, handleGetMovie);
+}
+
+export function* watchUpdateLike() {
+  yield takeLatest(getLikeActive.type, handleUpdateLike);
+}
+
+export function* watchUpdateDislike() {
+  yield takeLatest(getDislikeActive.type, handleUpdateDislike);
 }
