@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
 from django.contrib.auth.models import User
+
+from movies.models import Movie
 from .serializers import UserSerializer
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 
@@ -68,7 +70,7 @@ class RegisterView(APIView):
 
 
 class LoadUserView(APIView):
-    def get(self, request, format=None):
+    def get(self, request, ):
         try:
             user = request.user
             user = UserSerializer(user)
