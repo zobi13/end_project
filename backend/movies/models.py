@@ -16,7 +16,10 @@ class Movie(models.Model):
     genre = models.ManyToManyField(Genre)
     likes = models.IntegerField(blank=True, default=0)
     dislikes = models.IntegerField(blank=True, default=0)
-    users = models.ManyToManyField(User)
+    usersLiked = models.ManyToManyField(
+        User, related_name='users_liked_movie', blank=True)
+    usersDisliked = models.ManyToManyField(
+        User, related_name='users_disliked_movie', blank=True)
 
     def __str__(self):
         return self.title
